@@ -6,7 +6,7 @@ const ObrasSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    criador: {
+    autores: {
         type: String,
         required: true
     },
@@ -21,6 +21,6 @@ const ObrasSchema = new mongoose.Schema({
 
 })
 
-const Obras = mongoose.Schema("Obras", ObrasSchema)
+const Obras = mongoose.model("Obras", ObrasSchema)
 
 export default Obras

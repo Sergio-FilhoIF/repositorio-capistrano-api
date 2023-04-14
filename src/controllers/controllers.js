@@ -1,44 +1,34 @@
-const soma = (req, res) => {
-    const nome = 'Anderson'
-    const idade = 16
+import obrasService from '../services/obras.services.js'
 
-  res.json(`${nome}, ${idade}`)
-}
-
-const saudacao = (req, res) => {
-  const {
-    nome
-  } = req.body
-
-  res.json(`Seja bem-vindo, ${nome}`)
-}
-
-const cadastro = (req, res) => {
+const cadastro_obras = async (req, res) => {
     const {
-        nome, senha, confirmsenha
+        titulo, descricao, resumo, autores
     } = req.body
 
-    if (!nome || !senha || !confirmsenha) {
+    if (!titulo || !autores || !descricao || !resumo) {
         res.status(400).json({message: "Há um campo vazio"})
-    }else {
-        if (senha != confirmsenha) {
-            res.status(400).json({message: "Senha diferentes!"})
-        }else {
-        if (senha.length < 6) {
-            res.status(400).json({message: "A senha deve ter ao menos 6 digitos"})
-        } else {
+    } else {
+        const Obras = await obrasService.create(req.body)
+
+        if (!Obras) {
+            res.status(400).send({message: "Erro na criação das obras"})
+        }
+
             res.status(201).json(
                 {
                     user: {
-                        nome, senha, confirmsenha
+                        id: Obras._id,
+                        titulo,
+                        descricao,
+                        resumo, 
+                        autores
                     },
-                    message: "Usuario criado com sucesso"
+                    message: "Obra cadastrada com sucesso"
                 }
             )
         }
-        }
     }
-}
 
 
-export {soma, saudacao, cadastro}
+
+export {cadastro_obras}
