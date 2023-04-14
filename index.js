@@ -1,8 +1,20 @@
-const express = require('express')
+import express from 'express'
+import Route from "./src/routes/routes.js"
+import bodyParser from 'body-parser'
+import connectDatabase from './src/database/db.js'
+
+
 const app = express()
+const port = 3000
 
-app.get('/', function (req, res) {
-  res.send('Hello World')
-})
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+connectDatabase()
 
-app.listen(3000)
+app.use(express.json())
+app.use("/", Route)
+
+
+app.listen(port)
