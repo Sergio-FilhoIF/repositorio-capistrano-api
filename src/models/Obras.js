@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const ObrasSchema = new mongoose.Schema({
     titulo: {
         type: String,
